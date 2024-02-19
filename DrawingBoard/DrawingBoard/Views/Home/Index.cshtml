@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DrawingBoard.Models.Board>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h2>Boards</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Boards")">Create New Board</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var board in Model)
+        {
+            <tr>
+                <td>@board.Name</td>
+                <td>
+                    <a href="@Url.Action("Details", "Boards", new { id = board.Id })">View</a> |
+                    <a href="@Url.Action("Edit", "Boards", new { id = board.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Boards", new { id = board.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/drawingHub").build();
+
+    connection.on("ReceiveDrawing", function (type, color, content) {
+        // Update the board with the new drawing
+    });
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("drawButton").addEventListener("click", function (event) {
+        var type = document.getElementById("typeInput").value;
+        var color = document.getElementById("colorInput").value;
+        var content = document.getElementById("contentInput").value;
+
+        connection.invoke("SendDrawing", type, color, content).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        event.preventDefault();
+    });
+</script>
