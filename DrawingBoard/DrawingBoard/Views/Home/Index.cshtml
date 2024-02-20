@@ -7,7 +7,7 @@
 <h2>Boards</h2>
 
 <p>
-    <a href="@Url.Action("Create", "Boards")">Create New Board</a>
+    @Html.ActionLink("Create New Board", "Create", "Boards", null, new { @class = "btn btn-primary" })
 </p>
 
 <table class="table">

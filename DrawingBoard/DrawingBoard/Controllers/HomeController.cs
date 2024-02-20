@@ -1,5 +1,7 @@
+using DrawingBoard.DbContexts;
 using DrawingBoard.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace DrawingBoard.Controllers
@@ -7,16 +9,22 @@ namespace DrawingBoard.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
-
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(Board board)
         {
-            return View();
+            var model = new List<Board>();
+
+            // Populate the model with data
+            model.Add(new Board { Name = "Board 1"});
+            model.Add(new Board { Name = "Board 2"});
+            return View(await _context.Boards.ToListAsync());
         }
 
         public IActionResult Privacy()

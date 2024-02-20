@@ -1,0 +1,14 @@
+﻿@model DrawingBoard.Models.Board
+
+@using (Html.BeginForm("Create", "Boards", FormMethod.Post))
+{
+    <div>
+        <label for="Name">Board Name:</label>
+        @Html.TextBoxFor(model => model.Name, new { @required = "required" })
+    </div>
+    <div>
+        <label for="Thumbnail">Thumbnail:</label>
+        @Html.TextBoxFor(model => model.Thumbnail, new { @required = "required" })
+    </div>
+    <input type="submit" value="Create New Board" />
+}

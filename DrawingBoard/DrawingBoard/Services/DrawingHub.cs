@@ -26,6 +26,7 @@ namespace DrawingBoard.Services
             var boardId = Context.GetHttpContext().Request.Query["boardId"];
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, boardId);
 
+
             await base.OnDisconnectedAsync(exception);
         }
     }

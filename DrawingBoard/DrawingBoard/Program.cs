@@ -1,7 +1,12 @@
+using DrawingBoard.Configurations;
+using DrawingBoard.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.ConfigureDataAccess(builder.Configuration);
+builder.Services.AddScoped<DrawingHub>();
 
 var app = builder.Build();
 
